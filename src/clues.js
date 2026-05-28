@@ -3,7 +3,7 @@
 //  All clue text, affirmations, and GPS coordinates live here.
 // ══════════════════════════════════════════════════════════
 
-export const UNLOCK_RADIUS_FEET = 150;
+export const UNLOCK_RADIUS_FEET = 50;
 
 export const CLUES = [
   {
