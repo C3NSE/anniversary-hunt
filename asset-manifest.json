@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/anniversary-hunt/static/css/main.55c18413.css",
-    "main.js": "/anniversary-hunt/static/js/main.da79fd49.js",
+    "main.js": "/anniversary-hunt/static/js/main.bfd882c6.js",
     "index.html": "/anniversary-hunt/index.html",
     "main.55c18413.css.map": "/anniversary-hunt/static/css/main.55c18413.css.map",
-    "main.da79fd49.js.map": "/anniversary-hunt/static/js/main.da79fd49.js.map"
+    "main.bfd882c6.js.map": "/anniversary-hunt/static/js/main.bfd882c6.js.map"
   },
   "entrypoints": [
     "static/css/main.55c18413.css",
-    "static/js/main.da79fd49.js"
+    "static/js/main.bfd882c6.js"
   ]
 }
