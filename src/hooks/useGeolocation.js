@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 const FEET_PER_METER = 3.28084;
 
@@ -15,49 +15,40 @@ function haversineMeters(lat1, lng1, lat2, lng2) {
 }
 
 export function useGeolocation(targetLat, targetLng, unlockRadiusFeet) {
-  const [status, setStatus] = useState('idle');
+  const [status, setStatus] = useState('idle'); // idle | checking | tooFar | denied | unavailable
   const [distanceFeet, setDistanceFeet] = useState(null);
-  const [distanceMeters, setDistanceMeters] = useState(null);
   const [withinRange, setWithinRange] = useState(false);
-  const watchRef = useRef(null);
-  const confirmTimer = useRef(null);
   const unlockRadiusMeters = unlockRadiusFeet / FEET_PER_METER;
 
+  // Reset state when target changes (i.e. new clue unlocked)
   useEffect(() => {
+    setStatus('idle');
+    setDistanceFeet(null);
+    setWithinRange(false);
+  }, [targetLat, targetLng]);
+
+  const checkLocation = useCallback(() => {
     if (!navigator.geolocation) {
       setStatus('unavailable');
       return;
     }
-
-    setStatus('requesting');
-
-    watchRef.current = navigator.geolocation.watchPosition(
+    setStatus('checking');
+    navigator.geolocation.getCurrentPosition(
       (pos) => {
-        setStatus('active');
         const meters = haversineMeters(
           pos.coords.latitude,
           pos.coords.longitude,
           targetLat,
           targetLng
         );
-        const feet = meters * FEET_PER_METER;
-        setDistanceMeters(meters);
-        setDistanceFeet(Math.round(feet));
-
+        const feet = Math.round(meters * FEET_PER_METER);
+        setDistanceFeet(feet);
         if (meters <= unlockRadiusMeters) {
-          // Only fire withinRange after staying inside for 3 seconds
-          if (!confirmTimer.current) {
-            confirmTimer.current = setTimeout(() => {
-              setWithinRange(true);
-            }, 3000);
-          }
+          setWithinRange(true);
+          setStatus('idle');
         } else {
-          // Left the radius — cancel any pending confirmation
-          if (confirmTimer.current) {
-            clearTimeout(confirmTimer.current);
-            confirmTimer.current = null;
-          }
           setWithinRange(false);
+          setStatus('tooFar');
         }
       },
       (err) => {
@@ -66,15 +57,6 @@ export function useGeolocation(targetLat, targetLng, unlockRadiusFeet) {
       },
       { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
     );
-
-    return () => {
-      if (watchRef.current !== null) {
-        navigator.geolocation.clearWatch(watchRef.current);
-      }
-      if (confirmTimer.current) {
-        clearTimeout(confirmTimer.current);
-      }
-    };
   }, [targetLat, targetLng, unlockRadiusMeters]);
 
   const formatDistance = () => {
@@ -83,10 +65,5 @@ export function useGeolocation(targetLat, targetLng, unlockRadiusFeet) {
     return `${distanceFeet} ft`;
   };
 
-  const proximityPct =
-    distanceMeters !== null
-      ? Math.round(Math.min(100, Math.max(0, (1 - distanceMeters / 500) * 100)))
-      : 0;
-
-  return { status, distanceFeet, withinRange, formatDistance, proximityPct };
+  return { status, withinRange, checkLocation, formatDistance };
 }
