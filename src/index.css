@@ -1,0 +1,34 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --green-deep: #0a3d2e;
+  --green-dark: #085041;
+  --green-mid: #1D9E75;
+  --green-light: #5DCAA5;
+  --green-pale: #E1F5EE;
+  --cream: #FAF8F3;
+  --warm-white: #FFFEF9;
+  --gold: #C8973A;
+  --gold-light: #F0C97A;
+  --text-dark: #1a1a18;
+  --text-mid: #4a4a46;
+  --text-muted: #8a8a84;
+  --radius: 18px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100%;
+}

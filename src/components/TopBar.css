@@ -1,0 +1,53 @@
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--green-deep);
+  padding: 14px 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.topbar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--green-pale);
+  text-align: center;
+}
+
+.progress-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.pip {
+  flex: 1;
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.15);
+  transition: background 0.5s ease;
+}
+.pip.done { background: var(--green-light); }
+.pip.active { background: var(--gold); }
+
+.gps-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  flex-shrink: 0;
+  margin-left: 4px;
+  transition: background 0.3s;
+}
+.gps-indicator.on {
+  background: var(--green-light);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}

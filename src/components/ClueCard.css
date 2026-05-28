@@ -1,0 +1,165 @@
+.clue-card {
+  background: var(--warm-white);
+  border: 1px solid #e8e4dc;
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.clue-card.locked {
+  background: #f7f7f3;
+  border-color: #e0dfd8;
+}
+
+.clue-card.active {
+  border-color: var(--green-light);
+  box-shadow: 0 0 0 2px var(--green-light), 0 8px 28px rgba(29, 158, 117, 0.12);
+}
+
+.clue-card.just-unlocked {
+  animation: card-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes card-pop {
+  0% { transform: scale(0.94); opacity: 0.6; }
+  60% { transform: scale(1.03); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── HEADER ── */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px 12px;
+}
+
+.clue-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  border: 1.5px solid;
+}
+
+.badge-locked {
+  background: #f0f0ec;
+  color: #bbbbb5;
+  border-color: #c8c8c0;
+}
+.badge-active {
+  background: var(--green-deep);
+  color: var(--gold-light);
+  border-color: var(--gold);
+}
+.badge-done {
+  background: var(--green-pale);
+  color: var(--green-dark);
+  border-color: var(--green-light);
+}
+
+.card-meta { flex: 1; min-width: 0; }
+
+.card-step {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.card-location {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.clue-card.locked .card-location { color: #bbbbb5; }
+
+.card-status-icon { flex-shrink: 0; font-size: 20px; }
+.icon-check { color: var(--green-mid); }
+.icon-lock { opacity: 0.3; }
+.card-emoji { font-size: 22px; }
+
+/* ── PROXIMITY BAR ── */
+.prox-wrap { padding: 0 18px 14px; }
+.prox-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+.prox-dist { font-weight: 500; color: var(--green-mid); }
+.prox-track {
+  height: 5px;
+  background: #e8e4dc;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.prox-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--green-light), var(--gold));
+  transition: width 1.2s ease;
+}
+
+/* ── BODY ── */
+.card-body { padding: 0 18px 18px; }
+.card-divider { height: 1px; background: #e8e4dc; margin-bottom: 14px; }
+
+.clue-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green-mid);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.clue-text {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.68;
+  color: var(--text-dark);
+  margin: 0 0 14px;
+}
+
+.hint-toggle {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 1px solid #ddddd8;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.hint-toggle:hover {
+  background: var(--green-pale);
+  border-color: var(--green-light);
+  color: var(--green-dark);
+}
+
+.hint-text {
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed #ddddd8;
+}
