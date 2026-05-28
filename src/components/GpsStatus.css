@@ -1,42 +1,32 @@
-.gps-status-bar {
-  background: var(--cream-ghost);
-  border: 1px solid rgba(143,188,106,0.2);
-  border-radius: 10px;
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 12px;
-  color: var(--cream-muted);
-}
+import React from 'react';
+import './GpsStatus.css';
 
-.gps-status-bar.denied {
-  border-color: rgba(200,151,58,0.3);
-  background: rgba(200,151,58,0.06);
-}
+export default function GpsStatus({ status, formattedDistance, onCheckLocation }) {
+  const isChecking = status === 'checking';
+  const isTooFar = status === 'tooFar';
+  const isDenied = status === 'denied';
 
-.gps-icon { font-size: 15px; flex-shrink: 0; }
-.gps-text { flex: 1; line-height: 1.3; }
+  return (
+    <div className={`gps-status-bar ${isTooFar ? 'too-far' : ''} ${isDenied ? 'denied' : ''}`}>
+      <span className="gps-icon">
+        {isChecking ? '🛰️' : isTooFar ? '📍' : isDenied ? '⚠️' : '📍'}
+      </span>
 
-.gps-dist {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--trail);
-  white-space: nowrap;
-}
+      <span className="gps-text">
+        {isChecking && 'Checking your location…'}
+        {isTooFar && `Not quite — you're still ${formattedDistance} away`}
+        {isDenied && 'Location permission denied'}
+        {status === 'unavailable' && 'GPS unavailable on this device'}
+        {status === 'idle' && "Tap when you've arrived"}
+      </span>
 
-.manual-btn {
-  background: var(--amber);
-  color: var(--forest-dark);
-  border: none;
-  border-radius: 7px;
-  padding: 6px 12px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: opacity 0.2s;
+      <button
+        className={`manual-btn ${isChecking ? 'checking' : ''}`}
+        onClick={onCheckLocation}
+        disabled={isChecking}
+      >
+        {isChecking ? '…' : "I'm here"}
+      </button>
+    </div>
+  );
 }
-.manual-btn:active { opacity: 0.85; }
