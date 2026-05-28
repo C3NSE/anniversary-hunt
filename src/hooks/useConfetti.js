@@ -1,6 +1,6 @@
 import { useRef, useCallback } from 'react';
 
-const COLORS = ['#5DCAA5', '#C8973A', '#F0C97A', '#E1F5EE', '#085041', '#ffffff', '#D4A853'];
+const COLORS = ['#8fbc6a', '#c8973a', '#e8b85a', '#f5ede0', '#1a3d22', '#ffffff', '#b8d99a'];
 
 export function useConfetti() {
   const canvasRef = useRef(null);

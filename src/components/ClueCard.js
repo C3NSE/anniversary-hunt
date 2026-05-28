@@ -3,7 +3,6 @@ import './ClueCard.css';
 
 export default function ClueCard({ clue, index, total, state, proximityPct, formattedDistance }) {
   const [hintOpen, setHintOpen] = useState(false);
-  // state: 'locked' | 'active' | 'done'
   const isLocked = state === 'locked';
   const isActive = state === 'active';
   const isDone = state === 'done';
@@ -13,7 +12,6 @@ export default function ClueCard({ clue, index, total, state, proximityPct, form
       id={`card-${index}`}
       className={`clue-card ${state}`}
     >
-      {/* ── HEADER ── */}
       <div className="card-header">
         <div className={`clue-badge badge-${state}`}>
           {isDone ? '✓' : isLocked ? '?' : index + 1}
@@ -31,7 +29,6 @@ export default function ClueCard({ clue, index, total, state, proximityPct, form
         </div>
       </div>
 
-      {/* ── PROXIMITY BAR (active only) ── */}
       {isActive && (
         <div className="prox-wrap">
           <div className="prox-label">
@@ -44,7 +41,6 @@ export default function ClueCard({ clue, index, total, state, proximityPct, form
         </div>
       )}
 
-      {/* ── CLUE BODY (active + done) ── */}
       {!isLocked && (
         <div className="card-body">
           <div className="card-divider" />

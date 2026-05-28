@@ -8,16 +8,147 @@
 }
 
 .scroll-area {
-  padding: 108px 16px 48px;
+  padding: 96px 14px 48px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   max-width: 540px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .cards-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+}
+
+/* ── HERO SCREEN ── */
+.hero-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  background: var(--forest-dark);
+  animation: hero-fade-in 0.6s ease both;
+}
+
+@keyframes hero-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hero-photo {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.72) saturate(1.1);
+}
+
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(9,31,16,0.15) 0%,
+    transparent 25%,
+    rgba(9,31,16,0.8) 75%,
+    var(--forest-dark) 100%
+  );
+}
+
+.hero-compass {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  z-index: 2;
+  opacity: 0.65;
+}
+
+.hero-bottom {
+  padding: 0 24px 48px;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(143,188,106,0.12);
+  border: 1px solid rgba(143,188,106,0.28);
+  border-radius: 99px;
+  padding: 5px 12px;
+  font-size: 10px;
+  color: var(--trail);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 58px;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+.hero-title em {
+  color: var(--amber);
+  font-style: normal;
+}
+
+.hero-sub {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--cream-muted);
+  line-height: 1.55;
+  margin-bottom: 24px;
+}
+
+.hero-start-btn {
+  display: block;
+  width: 100%;
+  background: var(--amber);
+  color: var(--forest-dark);
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.hero-start-btn:active {
+  background: var(--amber-light);
+  transform: scale(0.98);
+}
+
+.hero-stamp {
+  text-align: center;
+  font-size: 10px;
+  color: var(--cream-dim);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 12px;
 }

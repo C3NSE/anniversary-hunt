@@ -2,52 +2,57 @@
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: var(--green-deep);
-  padding: 14px 20px 12px;
+  background: var(--forest-dark);
+  border-bottom: 1px solid rgba(143,188,106,0.15);
+  padding: 14px 18px 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .topbar-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  letter-spacing: 0.06em;
-  color: var(--green-pale);
-  text-align: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--cream);
 }
 
-.progress-row {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.pip {
-  flex: 1;
-  height: 4px;
-  border-radius: 99px;
-  background: rgba(255, 255, 255, 0.15);
-  transition: background 0.5s ease;
-}
-.pip.done { background: var(--green-light); }
-.pip.active { background: var(--gold); }
-
-.gps-indicator {
-  width: 8px;
-  height: 8px;
+.gps-dot {
+  width: 8px; height: 8px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.25);
-  flex-shrink: 0;
-  margin-left: 4px;
+  background: rgba(255,255,255,0.2);
   transition: background 0.3s;
+  flex-shrink: 0;
 }
-.gps-indicator.on {
-  background: var(--green-light);
+
+.gps-dot.on {
+  background: var(--trail);
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.75); }
+  50% { opacity: 0.4; transform: scale(0.7); }
 }
+
+.progress-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.pip {
+  flex: 1;
+  height: 3px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.1);
+  transition: background 0.5s ease;
+}
+.pip.done { background: var(--trail); }
+.pip.active { background: var(--amber); }

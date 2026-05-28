@@ -15,7 +15,7 @@ function haversineMeters(lat1, lng1, lat2, lng2) {
 }
 
 export function useGeolocation(targetLat, targetLng, unlockRadiusFeet) {
-  const [status, setStatus] = useState('idle'); // idle | requesting | active | denied | unavailable
+  const [status, setStatus] = useState('idle');
   const [distanceFeet, setDistanceFeet] = useState(null);
   const [distanceMeters, setDistanceMeters] = useState(null);
   const [withinRange, setWithinRange] = useState(false);
@@ -64,7 +64,6 @@ export function useGeolocation(targetLat, targetLng, unlockRadiusFeet) {
     return `${distanceFeet} ft`;
   };
 
-  // 0–100 proximity score (100 = at location)
   const proximityPct =
     distanceMeters !== null
       ? Math.round(Math.min(100, Math.max(0, (1 - distanceMeters / 500) * 100)))

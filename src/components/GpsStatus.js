@@ -5,7 +5,7 @@ const STATUS_MESSAGES = {
   idle: 'Starting GPS…',
   requesting: 'Requesting location permission…',
   active: null,
-  denied: 'Location permission denied — tap to open settings',
+  denied: 'Location permission denied — tap to unlock manually',
   unavailable: 'GPS unavailable on this device',
 };
 
