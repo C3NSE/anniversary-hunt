@@ -15,12 +15,11 @@ function haversineMeters(lat1, lng1, lat2, lng2) {
 }
 
 export function useGeolocation(targetLat, targetLng, unlockRadiusFeet) {
-  const [status, setStatus] = useState('idle'); // idle | checking | tooFar | denied | unavailable
+  const [status, setStatus] = useState('idle');
   const [distanceFeet, setDistanceFeet] = useState(null);
   const [withinRange, setWithinRange] = useState(false);
   const unlockRadiusMeters = unlockRadiusFeet / FEET_PER_METER;
 
-  // Reset state when target changes (i.e. new clue unlocked)
   useEffect(() => {
     setStatus('idle');
     setDistanceFeet(null);
