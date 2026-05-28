@@ -1,106 +1,17 @@
 # Anniversary Scavenger Hunt 🧗
 
-A GPS-unlocking mobile scavenger hunt app built with React, deployable to GitHub Pages.
-
-## Features
-
-- 📍 **GPS unlocking** — clues unlock automatically when within 150 feet of the target location
-- 🔒 **Locked by default** — future clues are hidden until reached
-- 🎉 **Confetti animations** on each unlock
-- 💾 **Progress saved** in localStorage — closing the browser won't lose progress
-- 🆘 **Manual override** button if GPS permission is denied
-- 📱 **Mobile-first** design, works in any phone browser over HTTPS
+A GPS-assisted mobile scavenger hunt app built with React, deployed to GitHub Pages. Built for Katelyn's 4th anniversary hunt — 9 stops, cryptic clues, personal affirmations, and a climbing shoe reveal at the end.
 
 ---
 
-## Setup
+## How It Works
 
-### 1. Clone the repo
-```bash
-git clone https://github.com/YOUR_USERNAME/anniversary-hunt.git
-cd anniversary-hunt
-npm install
-```
-
-### 2. Set your coordinates
-
-Open `src/clues.js` and replace the `lat` / `lng` values for each clue.
-
-**How to get coordinates from Google Maps:**
-1. Open [maps.google.com](https://maps.google.com) on your computer
-2. Right-click the exact spot you want to pin
-3. The coordinates appear at the top of the context menu — click them to copy
-4. Paste the lat/lng into the matching clue entry
-
-```js
-{
-  id: 1,
-  location: "Your Home",
-  clue: "...",
-  hint: "...",
-  lat: 40.5317,  // ← paste your latitude here
-  lng: -81.4762, // ← paste your longitude here
-},
-```
-
-You can also adjust `UNLOCK_RADIUS_FEET` at the top of the file (default: 150 ft).
-
-### 3. Run locally to test
-```bash
-npm start
-```
-Opens at `http://localhost:3000`. Note: GPS won't work on localhost (requires HTTPS).
-Use the **"I'm here"** manual button to test the unlock flow locally.
-
----
-
-## Deploy to GitHub Pages
-
-### Option A — Automatic (GitHub Actions) ✅ Recommended
-
-Every push to `main` automatically builds and deploys.
-
-1. Create a new repo on GitHub named `anniversary-hunt`
-2. Push this project:
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/anniversary-hunt.git
-git push -u origin main
-```
-3. In your GitHub repo → **Settings → Pages**
-   - Source: **Deploy from a branch**
-   - Branch: **gh-pages** / `/(root)`
-4. Update `"homepage"` in `package.json`:
-```json
-"homepage": "https://YOUR_USERNAME.github.io/anniversary-hunt"
-```
-5. Push the change — GitHub Actions will build and deploy automatically
-
-Your app will be live at:
-```
-https://YOUR_USERNAME.github.io/anniversary-hunt
-```
-
-### Option B — Manual deploy with gh-pages
-```bash
-npm run deploy
-```
-This runs `npm run build` then pushes the `build/` folder to the `gh-pages` branch.
-
----
-
-## Sharing with your wife
-
-Once deployed, just text her the URL:
-```
-https://YOUR_USERNAME.github.io/anniversary-hunt
-```
-
-When she opens it on her phone, the browser will ask for location permission.
-She taps **Allow**, and the hunt begins!
+1. Katelyn opens the app and sees a hero screen with a photo and a **Begin the Hunt** button
+2. Each clue is hidden until she arrives at the location and taps **I'm here**
+3. The app does a single GPS check — if she's within 150 ft it unlocks; if not, it tells her exactly how far away she still is
+4. On unlock: confetti fires, an **Unlock Overlay** celebrates the arrival, then a full-screen **Affirmation** from Cody appears
+5. She taps Continue to reveal the next cryptic clue
+6. Final stop triggers a full-screen celebration with a photo
 
 ---
 
@@ -109,42 +20,120 @@ She taps **Allow**, and the hunt begins!
 ```
 anniversary-hunt/
 ├── public/
-│   └── index.html              # HTML shell with mobile meta tags
+│   ├── index.html               # HTML shell, loads Bebas Neue + Playfair Display + DM Sans
+│   └── photos/
+│       ├── hero.jpg             # Photo shown on opening screen
+│       └── final.jpg            # Photo shown on final celebration screen
 ├── src/
-│   ├── clues.js                # ← EDIT THIS: all clue data + coordinates
-│   ├── App.js                  # Root component, unlock logic
-│   ├── App.css
-│   ├── index.js                # React entry point
-│   ├── index.css               # Global design tokens
+│   ├── clues.js                 # ← ALL clue text, hints, affirmations, and GPS coords live here
+│   ├── App.js                   # Root component, unlock logic, hero screen, flow control
+│   ├── App.css                  # Hero screen styles
+│   ├── index.js                 # React entry point
+│   ├── index.css                # Global design tokens (trail map color palette)
 │   ├── hooks/
-│   │   ├── useGeolocation.js   # GPS watching + distance calculation
-│   │   └── useConfetti.js      # Canvas confetti animation
+│   │   ├── useGeolocation.js    # Single-check GPS — fires on button tap, not continuously
+│   │   └── useConfetti.js       # Canvas confetti animation
 │   └── components/
-│       ├── TopBar.js / .css    # Fixed header with progress pips
-│       ├── GpsStatus.js / .css # GPS status + distance bar
-│       ├── ClueCard.js / .css  # Individual clue card (locked/active/done)
+│       ├── TopBar.js / .css         # Fixed header with progress pips
+│       ├── GpsStatus.js / .css      # "I'm here" button + distance error message
+│       ├── ClueCard.js / .css       # Individual clue card (locked / active / done)
 │       ├── UnlockOverlay.js / .css  # Celebration modal on unlock
-│       └── FinalScreen.js / .css   # Final full-screen celebration
+│       ├── AffirmationScreen.js / .css  # Full-screen personal note after each unlock
+│       └── FinalScreen.js / .css    # Final full-screen celebration with photo
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml          # Auto-deploy to GitHub Pages on push
-├── package.json
-└── README.md
+│       └── deploy.yml           # Auto-deploys to GitHub Pages on every push to main
+└── package.json                 # homepage set to https://C3nSE.github.io/anniversary-hunt
 ```
+
+---
+
+## Editing Clues
+
+All clue content lives in `src/clues.js`. Each entry has:
+
+```js
+{
+  id: 1,
+  location: '???',       // Shown on the card header — use '???' to keep it cryptic
+  emoji: '🐾',           // Shown in the unlock overlay
+  clue: '...',           // The cryptic riddle shown on the active card
+  hint: '...',           // Revealed when she taps "Need a hint?"
+  affirmation: '...',    // Full-screen personal note shown after unlock
+  lat: 40.5284,          // GPS latitude of the target location
+  lng: -81.4628,         // GPS longitude of the target location
+}
+```
+
+**To get coordinates from Google Maps:**
+1. Open [maps.google.com](https://maps.google.com)
+2. Right-click the exact spot
+3. Coordinates appear at the top of the menu — click to copy
+
+---
+
+## GPS Unlock Behavior
+
+Rather than watching GPS continuously, the app uses a **single on-demand check**:
+
+- Katelyn taps **I'm here** when she thinks she's arrived
+- The app calls `getCurrentPosition` once with `maximumAge: 0` (always fresh)
+- If she's within `UNLOCK_RADIUS_FEET` (set to 150 ft in `clues.js`), the clue unlocks
+- If not, the status bar turns amber and shows her exact distance remaining
+- Adjust `UNLOCK_RADIUS_FEET` at the top of `clues.js` if needed
+
+---
+
+## Photos
+
+Photos are stored in `public/photos/` and referenced via `process.env.PUBLIC_URL` so they work correctly on GitHub Pages:
+
+- `hero.jpg` — displayed on the opening screen
+- `final.jpg` — displayed on the final celebration screen
+
+To swap photos, replace the files and keep the same filenames.
+
+---
+
+## Design
+
+Trail map aesthetic — dark forest green base (`#0d2818`), amber gold accents (`#c8973a`), trail green highlights (`#8fbc6a`), topographic grid overlay. Typography: **Bebas Neue** for headers, **Playfair Display** italic for clue text, **DM Sans** for UI.
+
+The affirmation screen inverts to a full amber background to create an emotional contrast from the rest of the app.
+
+---
+
+## Deploy to GitHub Pages
+
+Every push to `main` automatically builds and deploys via GitHub Actions.
+
+```bash
+git add .
+git commit -m "Update clues"
+git push
+```
+
+The app will be live at:
+```
+https://C3nSE.github.io/anniversary-hunt
+```
+
+GitHub Actions → Pages source must be set to the `gh-pages` branch in repo Settings.
 
 ---
 
 ## Resetting Progress
 
-Progress is stored in the browser's `localStorage`. To reset:
-- Open the browser dev tools (or Safari settings) and clear site data, OR
-- Add `?reset=1` to the URL and refresh (you can add this feature yourself)
+Progress is stored in `localStorage`. To reset:
+- Add `?reset=1` to the URL, or
+- Open browser dev tools → Application → Local Storage → clear `anniversary_hunt_unlocked` and `anniversary_hunt_started`
 
 ---
 
-## Tips
+## Pre-Hunt Checklist
 
-- **Test the flow** before the big day using the "I'm here" manual override button
-- **Coordinate with any stops** that need a human (e.g. the restaurant — call ahead!)
-- **Check your coords** by pasting them into Google Maps to confirm the pin is right
-- The app works offline once loaded, but GPS still needs signal
+- [ ] Confirm coordinates by pasting each lat/lng into Google Maps
+- [ ] Call Rock Mill Climbing — let them know Katelyn is coming to pick climbing shoes
+- [ ] Leave a printed copy of Clue 8 at Legacy High School's front entrance
+- [ ] Call ahead to Sammy Sue's so fair fries are ready on arrival
+- [ ] Test the full flow using the **I'm here** button before the big day
