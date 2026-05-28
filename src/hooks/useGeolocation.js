@@ -20,6 +20,7 @@ export function useGeolocation(targetLat, targetLng, unlockRadiusFeet) {
   const [distanceMeters, setDistanceMeters] = useState(null);
   const [withinRange, setWithinRange] = useState(false);
   const watchRef = useRef(null);
+  const confirmTimer = useRef(null);
   const unlockRadiusMeters = unlockRadiusFeet / FEET_PER_METER;
 
   useEffect(() => {
@@ -42,18 +43,36 @@ export function useGeolocation(targetLat, targetLng, unlockRadiusFeet) {
         const feet = meters * FEET_PER_METER;
         setDistanceMeters(meters);
         setDistanceFeet(Math.round(feet));
-        setWithinRange(meters <= unlockRadiusMeters);
+
+        if (meters <= unlockRadiusMeters) {
+          // Only fire withinRange after staying inside for 3 seconds
+          if (!confirmTimer.current) {
+            confirmTimer.current = setTimeout(() => {
+              setWithinRange(true);
+            }, 3000);
+          }
+        } else {
+          // Left the radius — cancel any pending confirmation
+          if (confirmTimer.current) {
+            clearTimeout(confirmTimer.current);
+            confirmTimer.current = null;
+          }
+          setWithinRange(false);
+        }
       },
       (err) => {
         if (err.code === 1) setStatus('denied');
         else setStatus('unavailable');
       },
-      { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 }
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
     );
 
     return () => {
       if (watchRef.current !== null) {
         navigator.geolocation.clearWatch(watchRef.current);
+      }
+      if (confirmTimer.current) {
+        clearTimeout(confirmTimer.current);
       }
     };
   }, [targetLat, targetLng, unlockRadiusMeters]);
