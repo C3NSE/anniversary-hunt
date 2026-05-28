@@ -1,35 +1,32 @@
 import React from 'react';
 import './GpsStatus.css';
 
-const STATUS_MESSAGES = {
-  idle: 'Starting GPS…',
-  requesting: 'Requesting location permission…',
-  active: null,
-  denied: 'Location permission denied — tap to unlock manually',
-  unavailable: 'GPS unavailable on this device',
-};
-
-export default function GpsStatus({ status, targetName, formattedDistance, onManualUnlock }) {
-  const msg = STATUS_MESSAGES[status] ?? 'Locating…';
-  const isActive = status === 'active';
+export default function GpsStatus({ status, formattedDistance, onCheckLocation }) {
+  const isChecking = status === 'checking';
+  const isTooFar = status === 'tooFar';
   const isDenied = status === 'denied';
 
   return (
-    <div className={`gps-status-bar ${isDenied ? 'denied' : ''}`}>
-      <span className="gps-icon">{isActive ? '📍' : isDenied ? '⚠️' : '🛰️'}</span>
-      <span className="gps-text">
-        {isActive
-          ? `Tracking · Next: ${targetName}`
-          : msg}
+    <div className={`gps-status-bar ${isTooFar ? 'too-far' : ''} ${isDenied ? 'denied' : ''}`}>
+      <span className="gps-icon">
+        {isChecking ? '🛰️' : isTooFar ? '📍' : isDenied ? '⚠️' : '📍'}
       </span>
-      {isActive && formattedDistance && (
-        <span className="gps-dist">{formattedDistance}</span>
-      )}
-      {isDenied && (
-        <button className="manual-btn" onClick={onManualUnlock}>
-          I'm here
-        </button>
-      )}
+
+      <span className="gps-text">
+        {isChecking && 'Checking your location…'}
+        {isTooFar && `Not quite — you're still ${formattedDistance} away`}
+        {isDenied && 'Location permission denied'}
+        {status === 'unavailable' && 'GPS unavailable on this device'}
+        {status === 'idle' && "Tap when you've arrived"}
+      </span>
+
+      <button
+        className={`manual-btn ${isChecking ? 'checking' : ''}`}
+        onClick={onCheckLocation}
+        disabled={isChecking}
+      >
+        {isChecking ? '…' : "I'm here"}
+      </button>
     </div>
   );
 }
