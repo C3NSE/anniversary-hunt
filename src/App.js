@@ -47,13 +47,13 @@ export default function App() {
 
   const currentClue = CLUES[unlockedCount] ?? null;
 
-  const { status, withinRange, formatDistance, proximityPct } = useGeolocation(
+  const { status, withinRange, checkLocation, formatDistance } = useGeolocation(
     currentClue?.lat ?? 0,
     currentClue?.lng ?? 0,
     UNLOCK_RADIUS_FEET
   );
 
-  // Trigger unlock when GPS says we're close enough
+  // Fire unlock when GPS confirms she's close enough
   useEffect(() => {
     if (withinRange && !overlayVisible && !affirmationVisible && !hasTriggered.current && unlockedCount < CLUES.length) {
       hasTriggered.current = true;
@@ -61,26 +61,22 @@ export default function App() {
       setOverlayVisible(true);
       launchConfetti();
     }
-    if (!withinRange) {
-      hasTriggered.current = false;
-    }
   }, [withinRange, overlayVisible, affirmationVisible, unlockedCount, launchConfetti]);
+
+  // Reset trigger lock when clue advances
+  useEffect(() => {
+    hasTriggered.current = false;
+  }, [unlockedCount]);
 
   const handleStart = useCallback(() => {
     setHuntStarted(true);
     saveStarted();
   }, []);
 
-  const handleManualUnlock = useCallback(() => {
-    if (unlockedCount < CLUES.length && !overlayVisible && !affirmationVisible) {
-      hasTriggered.current = true;
-      setJustUnlockedIndex(unlockedCount);
-      setOverlayVisible(true);
-      launchConfetti();
-    }
-  }, [unlockedCount, overlayVisible, affirmationVisible, launchConfetti]);
+  const handleCheckLocation = useCallback(() => {
+    checkLocation();
+  }, [checkLocation]);
 
-  // Dismiss unlock overlay → show affirmation
   const dismissOverlay = useCallback(() => {
     setOverlayVisible(false);
     const idx = justUnlockedIndex ?? unlockedCount;
@@ -88,7 +84,6 @@ export default function App() {
     setAffirmationVisible(true);
   }, [justUnlockedIndex, unlockedCount]);
 
-  // Dismiss affirmation → advance to next clue
   const dismissAffirmation = useCallback(() => {
     setAffirmationVisible(false);
     const next = (justUnlockedIndex ?? unlockedCount) + 1;
@@ -112,7 +107,6 @@ export default function App() {
     <>
       <canvas ref={canvasRef} className="confetti-canvas" aria-hidden="true" />
 
-      {/* Hero screen — shown until Katelyn taps Begin */}
       {!huntStarted && (
         <div className="hero-screen">
           <div className="hero-photo">
@@ -142,15 +136,12 @@ export default function App() {
       {huntStarted && (
         <>
           <TopBar total={CLUES.length} unlocked={unlockedCount} gpsStatus={status} />
-
           <main className="scroll-area">
             <GpsStatus
               status={status}
-              targetName={currentClue?.location ?? ''}
               formattedDistance={formatDistance()}
-              onManualUnlock={handleManualUnlock}
+              onCheckLocation={handleCheckLocation}
             />
-
             <div className="cards-list">
               {CLUES.map((clue, i) => {
                 const cardState =
@@ -162,8 +153,8 @@ export default function App() {
                     index={i}
                     total={CLUES.length}
                     state={cardState}
-                    proximityPct={i === unlockedCount ? proximityPct : 0}
-                    formattedDistance={i === unlockedCount ? formatDistance() : null}
+                    proximityPct={0}
+                    formattedDistance={null}
                   />
                 );
               })}
