@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ClueCard.css';
 
-export default function ClueCard({ clue, index, total, state, proximityPct, formattedDistance }) {
+export default function ClueCard({ clue, index, total, state }) {
   const [hintOpen, setHintOpen] = useState(false);
   const isLocked = state === 'locked';
   const isActive = state === 'active';
@@ -28,18 +28,6 @@ export default function ClueCard({ clue, index, total, state, proximityPct, form
           {isActive && <span className="card-emoji">{clue.emoji}</span>}
         </div>
       </div>
-
-      {isActive && (
-        <div className="prox-wrap">
-          <div className="prox-label">
-            <span>Getting closer…</span>
-            <span className="prox-dist">{formattedDistance ?? '—'}</span>
-          </div>
-          <div className="prox-track">
-            <div className="prox-fill" style={{ width: `${proximityPct}%` }} />
-          </div>
-        </div>
-      )}
 
       {!isLocked && (
         <div className="card-body">

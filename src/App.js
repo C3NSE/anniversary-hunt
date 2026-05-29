@@ -13,10 +13,21 @@ import './App.css';
 const STORAGE_KEY = 'anniversary_hunt_unlocked';
 const STARTED_KEY = 'anniversary_hunt_started';
 
+// Visiting the app with ?reset=1 wipes saved progress.
+// Handy for testing the full flow, or recovering if anything ever feels stuck.
+(function maybeReset() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('reset') === '1') {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STARTED_KEY);
+    }
+  } catch {}
+})();
+
 function loadProgress() {
   try {
-    const val = localStorage.getItem(STORAGE_KEY);
-    const n = parseInt(val, 10);
+    const n = parseInt(localStorage.getItem(STORAGE_KEY), 10);
     return isNaN(n) ? 0 : Math.min(n, CLUES.length);
   } catch {
     return 0;
@@ -46,24 +57,31 @@ export default function App() {
   const { canvasRef, launch: launchConfetti } = useConfetti();
 
   const currentClue = CLUES[unlockedCount] ?? null;
+  const activeRadius = currentClue?.radiusFeet ?? UNLOCK_RADIUS_FEET;
 
   const { status, withinRange, checkLocation, formatDistance } = useGeolocation(
     currentClue?.lat ?? 0,
     currentClue?.lng ?? 0,
-    UNLOCK_RADIUS_FEET
+    activeRadius
   );
 
-  // Fire unlock when GPS confirms she's close enough
-  useEffect(() => {
-    if (withinRange && !overlayVisible && !affirmationVisible && !hasTriggered.current && unlockedCount < CLUES.length) {
-      hasTriggered.current = true;
-      setJustUnlockedIndex(unlockedCount);
-      setOverlayVisible(true);
-      launchConfetti();
-    }
-  }, [withinRange, overlayVisible, affirmationVisible, unlockedCount, launchConfetti]);
+  // The single place an unlock begins — used by both GPS and the manual fallback.
+  const beginUnlock = useCallback(() => {
+    if (hasTriggered.current) return;
+    if (overlayVisible || affirmationVisible) return;
+    if (unlockedCount >= CLUES.length) return;
+    hasTriggered.current = true;
+    setJustUnlockedIndex(unlockedCount);
+    setOverlayVisible(true);
+    launchConfetti();
+  }, [overlayVisible, affirmationVisible, unlockedCount, launchConfetti]);
 
-  // Reset trigger lock when clue advances
+  // Fire the unlock once GPS confirms she's close enough.
+  useEffect(() => {
+    if (withinRange) beginUnlock();
+  }, [withinRange, beginUnlock]);
+
+  // Release the trigger lock whenever the clue advances.
   useEffect(() => {
     hasTriggered.current = false;
   }, [unlockedCount]);
@@ -76,6 +94,11 @@ export default function App() {
   const handleCheckLocation = useCallback(() => {
     checkLocation();
   }, [checkLocation]);
+
+  // The safety net: unlock this stop without waiting on GPS.
+  const handleManualUnlock = useCallback(() => {
+    beginUnlock();
+  }, [beginUnlock]);
 
   const dismissOverlay = useCallback(() => {
     setOverlayVisible(false);
@@ -137,11 +160,14 @@ export default function App() {
         <>
           <TopBar total={CLUES.length} unlocked={unlockedCount} gpsStatus={status} />
           <main className="scroll-area">
-            <GpsStatus
-              status={status}
-              formattedDistance={formatDistance()}
-              onCheckLocation={handleCheckLocation}
-            />
+            {!allDone && (
+              <GpsStatus
+                status={status}
+                formattedDistance={formatDistance()}
+                onCheckLocation={handleCheckLocation}
+                onManualUnlock={handleManualUnlock}
+              />
+            )}
             <div className="cards-list">
               {CLUES.map((clue, i) => {
                 const cardState =
@@ -153,8 +179,6 @@ export default function App() {
                     index={i}
                     total={CLUES.length}
                     state={cardState}
-                    proximityPct={0}
-                    formattedDistance={null}
                   />
                 );
               })}

@@ -3,13 +3,20 @@
 //  All clue text, affirmations, and GPS coordinates live here.
 // ══════════════════════════════════════════════════════════
 
-export const UNLOCK_RADIUS_FEET = 50;
+// Default unlock radius, in feet. Generous on purpose — GPS is
+// routinely off by 50–150 ft near buildings, so a tight radius
+// is the #1 cause of "I'm standing right here and it won't open."
+export const UNLOCK_RADIUS_FEET = 150;
 
+// Any clue may override the radius with an optional `radiusFeet`.
+// Big, sprawling spots (a lake, a trail, a park) get a wider one
+// so she doesn't have to find the exact pin.
 export const CLUES = [
   {
     id: 1,
     location: '???',
     emoji: '🐾',
+    radiusFeet: 200,
     clue:
       'Start where love lives and leashes hang. Find the place where the water won cold and a brave girl made her first splash. She had four legs. You were watching.',
     hint: 'The riverside swingset — where Marley took her very first swim.',
@@ -34,6 +41,7 @@ export const CLUES = [
     id: 3,
     location: '???',
     emoji: '🏀',
+    radiusFeet: 250,
     clue:
       "We had no plan. We had no reason to be there. But we showed up anyway and played until it was dark. Go back to where we did something ridiculous on a Tuesday — there's a rusted rim that remembers.",
     hint: 'The basketball hoop at Tuscora Park.',
@@ -46,6 +54,7 @@ export const CLUES = [
     id: 4,
     location: '???',
     emoji: '🏄',
+    radiusFeet: 400,
     clue:
       "Every summer we say we'll do it more. Every summer we mean it. Find the lake that holds our paddles and our promises — and look for your next clue near the water's edge.",
     hint: 'Atwood Lake — near the paddle board launch or main shoreline.',
@@ -58,6 +67,7 @@ export const CLUES = [
     id: 5,
     location: '???',
     emoji: '🛤️',
+    radiusFeet: 300,
     clue:
       'It follows a path that mules once walked, beside water that once carried coal. Find the trail that remembers the old Ohio — and look for your clue where the history begins.',
     hint: 'The Towpath Trail trailhead — check near the info kiosk or main signage.',
@@ -96,7 +106,7 @@ export const CLUES = [
     emoji: '🧗',
     clue:
       "You've solved every riddle. You've earned every mile. Now head to the place where the walls are meant to be climbed and the only way forward is up. When you get to the front desk, tell them Cody sent you — then go find your next pair of shoes.",
-    hint: 'Rock Mill Climbing in Akron — ask the front desk, they\'re expecting you!',
+    hint: "Rock Mill Climbing in Akron — ask the front desk, they're expecting you!",
     affirmation:
       "I love watching you climb. Watching you do something you're genuinely great at and love deeply is one of my favorite things. You're a wildly talented woman in so many ways. I haven't always made that a priority — but that changes today.",
     lat: 41.07552231647431,

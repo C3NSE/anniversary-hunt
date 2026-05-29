@@ -4,11 +4,17 @@
   border-radius: 10px;
   padding: 10px 14px;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
   font-size: 12px;
   color: var(--cream-muted);
   transition: border-color 0.3s, background 0.3s;
+}
+
+.gps-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .gps-status-bar.too-far {
@@ -22,7 +28,8 @@
 }
 
 .gps-icon { font-size: 15px; flex-shrink: 0; }
-.gps-text { flex: 1; line-height: 1.3; }
+.gps-text { flex: 1; line-height: 1.35; }
+.gps-text strong { color: var(--cream); font-weight: 500; }
 
 .manual-btn {
   background: var(--amber);
@@ -43,3 +50,28 @@
   opacity: 0.5;
   cursor: default;
 }
+
+.gps-hint {
+  font-size: 10.5px;
+  color: rgba(245,237,224,0.42);
+  line-height: 1.45;
+  padding-left: 25px;
+}
+
+.gps-override {
+  background: transparent;
+  border: none;
+  border-top: 1px dashed rgba(143,188,106,0.18);
+  padding: 9px 0 1px;
+  margin: 0;
+  width: 100%;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  color: var(--amber-light);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.gps-override:hover { color: var(--amber); }
+.gps-override:active { opacity: 0.8; }
