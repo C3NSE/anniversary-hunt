@@ -79,18 +79,6 @@ export const CLUES = [
   {
     id: 6,
     location: '???',
-    emoji: '☕',
-    clue:
-      'Head into the hills where the Amish roads twist and a small town keeps better coffee than it has any right to. Find the shop that has become yours and order what you always order.',
-    hint: 'Collective Coffee in Sugarcreek, OH — go get your order!',
-    affirmation:
-      'Coffee. We love it. You know what I love more? You. Haha — I win.',
-    lat: 40.502676738859186,
-    lng: -81.64123377006105,
-  },
-  {
-    id: 7,
-    location: '???',
     emoji: '🏫',
     clue:
       "Go to the building where you changed someone's life this week — even if you don't know it yet. Find the entrance where students walk in nervous and leave a little braver. Someone left something there for you.",
@@ -101,7 +89,7 @@ export const CLUES = [
     lng: -81.6314874841882,
   },
   {
-    id: 8,
+    id: 7,
     location: '???',
     emoji: '🧗',
     clue:
@@ -113,7 +101,7 @@ export const CLUES = [
     lng: -81.49776103876972,
   },
   {
-    id: 9,
+    id: 8,
     location: 'Rock Mill Climbing',
     emoji: '✨',
     clue:

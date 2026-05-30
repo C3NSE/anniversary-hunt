@@ -152,7 +152,7 @@ export default function App() {
             <button className="hero-start-btn" onClick={handleStart}>
               BEGIN THE HUNT →
             </button>
-            <div className="hero-stamp">4 Years · 9 Stops · 1 Perfect Day</div>
+            <div className="hero-stamp">4 Years · 8 Stops · 1 Perfect Day</div>
           </div>
         </div>
       )}
