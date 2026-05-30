@@ -22,8 +22,8 @@ export const CLUES = [
     hint: 'The riverside swingset — where Marley took her very first swim.',
     affirmation:
       "You've always been so good with Marley — the time you've given to train her, walk her, play with her, and love her. I'm so excited to watch you pour that same love into our kids someday. I already know you're going to be an incredible mom.",
-    lat: 40.52843566425283,
-    lng: -81.46287046033427,
+    lat: 40.521831199391656,
+    lng: -81.46942597783756,
   },
   {
     id: 2,
@@ -34,8 +34,8 @@ export const CLUES = [
     hint: "Sammy Sue's — grab an order of fair fries at the counter.",
     affirmation:
       "Your love for fries and popcorn is so simple, yet so beautiful. You don't need much to make your day. It inspires me to be content with the little things and look for joy in each moment.",
-    lat: 40.521945175119285,
-    lng: -81.4694396643174,
+    lat: 40.51881998690293,
+    lng: -81.47687346848207,
   },
   {
     id: 3,
@@ -47,8 +47,8 @@ export const CLUES = [
     hint: 'The basketball hoop at Tuscora Park.',
     affirmation:
       "Your spontaneous side was a perfect match for me. I know I'm not always loose enough to just go with it, but you make those moments fun and remind me what I used to be like. This is only the beginning — there are so many more memories to come.",
-    lat: 40.518759629376305,
-    lng: -81.47685490813065,
+    lat: 40.50002110369357, 
+    lng: -81.44239909922355,
   },
   {
     id: 4,
@@ -60,8 +60,8 @@ export const CLUES = [
     hint: 'Atwood Lake — near the paddle board launch or main shoreline.',
     affirmation:
       "Your consistency in my life is almost like our summers on the water. Your love is something I can always come back to and find rest in. Here's to many more precious moments doing the things we love most — together.",
-    lat: 40.500085925593346,
-    lng: -81.4426255046971,
+    lat: 40.5276113121001, 
+    lng: -81.28533109105558,
   },
   {
     id: 5,
@@ -73,8 +73,8 @@ export const CLUES = [
     hint: 'The Towpath Trail trailhead — check near the info kiosk or main signage.',
     affirmation:
       "I know you haven't always loved running, but I've loved watching you grow into it. Your boldness in trying new things and pushing past your own limits always surprises me. Keep pressing into that side of yourself — it will yield so much good.",
-    lat: 40.52774526813278,
-    lng: -81.2854832734586,
+    lat: 40.57699044416759,
+    lng: -81.39672871965966,
   },
   {
     id: 6,
