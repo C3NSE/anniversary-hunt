@@ -30,8 +30,8 @@ export const CLUES = [
     location: '???',
     emoji: '🍟',
     clue:
-      "She's known by her wings, but you're not here for those. Find the place where the fair never really left town, and order the thing that needs nothing but salt and a good day to be perfect.",
-    hint: "Sammy Sue's — grab an order of fair fries at the counter.",
+      "He's known by his wings, but you're not primarily here for those. Find the place where the fair never really left town, and order the thing that needs nothing but salt and a good day to be perfect.",
+    hint: "Sammy Sue's — grab an order of fair fries and maybe some wings at the counter.",
     affirmation:
       "Your love for fries and popcorn is so simple, yet so beautiful. You don't need much to make your day. It inspires me to be content with the little things and look for joy in each moment.",
     lat: 40.51881998690293,
