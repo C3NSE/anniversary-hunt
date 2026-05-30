@@ -75,3 +75,25 @@
 }
 .gps-override:hover { color: var(--amber); }
 .gps-override:active { opacity: 0.8; }
+
+.gps-sample-bar {
+  height: 3px;
+  background: rgba(143,188,106,0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 0 2px;
+}
+
+.gps-sample-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--amber);
+  border-radius: 2px;
+  transform-origin: left;
+  animation: gps-drain 7s linear forwards;
+}
+
+@keyframes gps-drain {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}

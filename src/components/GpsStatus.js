@@ -51,9 +51,14 @@ export default function GpsStatus({
       </div>
 
       {isChecking && (
-        <div className="gps-hint">
-          Hold still for a few seconds — it gets more accurate the longer it looks.
-        </div>
+        <>
+          <div className="gps-sample-bar">
+            <div className="gps-sample-fill" />
+          </div>
+          <div className="gps-hint">
+            Hold still — it gets more accurate the longer it looks.
+          </div>
+        </>
       )}
 
       {showOverride && (

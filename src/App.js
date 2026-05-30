@@ -74,6 +74,7 @@ export default function App() {
     setJustUnlockedIndex(unlockedCount);
     setOverlayVisible(true);
     launchConfetti();
+    navigator.vibrate?.([120, 60, 120]);
   }, [overlayVisible, affirmationVisible, unlockedCount, launchConfetti]);
 
   // Fire the unlock once GPS confirms she's close enough.
