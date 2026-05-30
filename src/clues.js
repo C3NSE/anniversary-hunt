@@ -43,7 +43,7 @@ export const CLUES = [
     emoji: '🏀',
     radiusFeet: 250,
     clue:
-      "We had no plan. We had no reason to be there. But we showed up anyway and played until it was dark. Go back to where we did something ridiculous on a Tuesday — there's a rusted rim that remembers.",
+      "We showed up anyway and played until it was dark. Go back to where we did something ridiculous on a Tuesday — there's a rusted rim that remembers.",
     hint: 'The basketball hoop at Tuscora Park.',
     affirmation:
       "Your spontaneous side was a perfect match for me. I know I'm not always loose enough to just go with it, but you make those moments fun and remind me what I used to be like. This is only the beginning — there are so many more memories to come.",
@@ -56,8 +56,8 @@ export const CLUES = [
     emoji: '🏄',
     radiusFeet: 400,
     clue:
-      "Every summer we say we'll do it more. Every summer we mean it. Find the lake that holds our paddles and our promises — and look for your next clue near the water's edge.",
-    hint: 'Atwood Lake — near the paddle board launch or main shoreline.',
+      "Every summer we say we'll do it more. Every summer we mean it. Find the lake where two idiots once raced barrels on paddle boards — and tap when you're standing at the water near the picnic tables.",
+    hint: "Atwood Lake — near the picnic tables at the water's edge.",
     affirmation:
       "Your consistency in my life is almost like our summers on the water. Your love is something I can always come back to and find rest in. Here's to many more precious moments doing the things we love most — together.",
     lat: 40.5276113121001, 
@@ -81,7 +81,7 @@ export const CLUES = [
     location: '???',
     emoji: '🏫',
     clue:
-      "Go to the building where you changed someone's life this week — even if you don't know it yet. Find the entrance where students walk in nervous and leave a little braver. Someone left something there for you.",
+      "Find the building with the patchy pitch out back — where the ground is too stubborn to be a real field, but the people inside are too determined to care. Go to the front entrance.",
     hint: 'Legacy High School — check the front entrance or main office.',
     affirmation:
       "Your bravery over the past two years — stepping into a new teaching role, building real connections with your students — constantly amazes me. You've had an impact on those kids that's bigger than you can even comprehend. And it's not over yet.",
@@ -93,8 +93,8 @@ export const CLUES = [
     location: '???',
     emoji: '🧗',
     clue:
-      "You've solved every riddle. You've earned every mile. Now head to the place where the walls are meant to be climbed and the only way forward is up. When you get to the front desk, tell them Cody sent you — then go find your next pair of shoes.",
-    hint: "Rock Mill Climbing in Akron — ask the front desk, they're expecting you!",
+      "You've solved every riddle. You've earned every mile. Now find the place where the walls are meant to be climbed and the only way forward is up. Walk through the doors — your final clue comes with a special coupon.",
+    hint: "Rock Mill Climbing in Akron.",
     affirmation:
       "I love watching you climb. Watching you do something you're genuinely great at and love deeply is one of my favorite things. You're a wildly talented woman in so many ways. I haven't always made that a priority — but that changes today.",
     lat: 41.07552231647431,
@@ -105,7 +105,7 @@ export const CLUES = [
     location: 'Rock Mill Climbing',
     emoji: '✨',
     clue:
-      'You made it, Katelyn. Every riddle, every mile, every stop. All of it led here — to me, waiting for you.',
+      'You made it, Katelyn. Every riddle, every mile, every stop. All of it led here — to this place, and to everything that comes next.',
     hint: "You're already here. Walk through the doors.",
     affirmation:
       "Love isn't finding someone you can live with. It's finding someone you can't live without. You're my without. I have cherished every single day of these four years, and I look forward to every one that comes after. Happy Anniversary. I love you. ♡",
